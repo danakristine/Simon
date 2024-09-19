@@ -70,10 +70,10 @@ while True:
     if blackb.value:
         add_to_sequence(mist)
         print("added")
-    if whiteb.value:
+    elif whiteb.value:
         display_sequence(mist)
         print(mist)
-    if orangeb.value:
+    elif orangeb.value:
         mist = []
     
         
