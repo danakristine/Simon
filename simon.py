@@ -40,6 +40,9 @@ yellowb.direction = Direction.INPUT
 blueb = DigitalInOut(board.D10)
 blueb.direction = Direction.INPUT
 
+
+start = False
+
 # creating functions
 def add_to_sequence(lyst):
     lyst.append(random.randint(0,3))
@@ -52,37 +55,95 @@ def display_sequence(jist):
             red.value = True
             time.sleep(0.3)
             red.value = False
+            time.sleep(0.3)
             
         if item == 1:
             green.value = True
             time.sleep(0.3)
             green.value = False
+            time.sleep(0.3)
             
         if item == 2:
             yellow.value = True
             time.sleep(0.3)
             yellow.value = False
+            time.sleep(0.3)
             
         if item == 3:
             blue.value = True
             time.sleep(0.3)
             blue.value = False
+            time.sleep(0.3)
             
 
+# def game_over:
+    
+    
+# def display_scr:
+    
 
+# def reset:
+    
+
+def user_led(mist):
+    if redb.value:
+        red.value = True
+        time.sleep(0.3)
+        red.value = False
+        time.sleep(0.3)
+        ist.append(0)
+        print("user:")
+        print(ist)
+        
+    if greenb.value:
+        green.value = True
+        time.sleep(0.3)
+        green.value = False
+        time.sleep(0.3)
+        ist.append(1)
+        print("user:")
+        print(ist)
+        
+    if yellowb.value:
+        yellow.value = True
+        time.sleep(0.3)
+        yellow.value = False
+        time.sleep(0.3)
+        ist.append(2)
+        print("user:")
+        print(ist)
+        
+    if blueb.value:
+        blue.value = True
+        time.sleep(0.3)
+        blue.value = False
+        time.sleep(0.3)
+        ist.append(3)
+        print("user:")
+        print(ist)
+    
+    
+    
 # main
 mist = []
+ist = []
 while True:
-    if whiteb.value:
-        time.sleep(0.2)
-        add_to_sequence(mist)
-        print("added")
-        time.sleep(0.2)
-        display_sequence(mist)
-        print(mist)
-        if redb.value:
-            mist.append('0')
-    elif blueb.value:
-        time.sleep(0.2)
-        print("end")
-        mist = []
+    if not start:
+        if whiteb.value:
+            start = True
+    if start:
+        if whiteb.value:
+            time.sleep(0.2)
+            add_to_sequence(mist)
+            print("added")
+            time.sleep(0.2)
+            display_sequence(mist)
+        user_led(ist)
+        
+        if ist == mist:
+            ist = []
+            time.sleep(0.2)
+            add_to_sequence(mist)
+            print("added")
+            time.sleep(0.2)
+            display_sequence(mist)
