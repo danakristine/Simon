@@ -40,9 +40,11 @@ yellowb.direction = Direction.INPUT
 blueb = DigitalInOut(board.D10)
 blueb.direction = Direction.INPUT
 
-
+#extra variables
 start = False
-
+points = 0
+mist = []
+ist =[]
 # creating functions
 def add_to_sequence(lyst):
     lyst.append(random.randint(0,3))
@@ -79,54 +81,99 @@ def display_sequence(jist):
 # def game_over:
     
     
-# def display_scr:
-    
+def display_scr():
+        print(points)
+        blue.value = True
+        red.value = True
+        yellow.value = True
+        green.value = True
+        time.sleep(0.2)
+        blue.value = False
+        red.value = False
+        yellow.value = False
+        green.value = False
+        time.sleep(0.2)
 
-# def reset:
-    
+def reset():
+    start = False
+    mist = []
+    ist = []
 
 def user_led(mist):
-    if redb.value:
-        red.value = True
-        time.sleep(0.3)
-        red.value = False
-        time.sleep(0.3)
-        ist.append(0)
-        print("user:")
-        print(ist)
-        
-    if greenb.value:
-        green.value = True
-        time.sleep(0.3)
-        green.value = False
-        time.sleep(0.3)
-        ist.append(1)
-        print("user:")
-        print(ist)
-        
-    if yellowb.value:
-        yellow.value = True
-        time.sleep(0.3)
-        yellow.value = False
-        time.sleep(0.3)
-        ist.append(2)
-        print("user:")
-        print(ist)
-        
-    if blueb.value:
-        blue.value = True
-        time.sleep(0.3)
-        blue.value = False
-        time.sleep(0.3)
-        ist.append(3)
-        print("user:")
-        print(ist)
-    
+    if start:
+        if redb.value:
+            red.value = True
+            time.sleep(0.3)
+            red.value = False
+            time.sleep(0.3)
+            ist.append(0)
+            print("user:")
+            print(ist)
+            while mist == ist:
+                points += 1
+                ist = []
+                time.sleep(0.2)
+                add_to_sequence(mist)
+                print("added")
+                time.sleep(0.2)
+                display_sequence(mist)            
+            
+        if greenb.value:
+            green.value = True
+            time.sleep(0.3)
+            green.value = False
+            time.sleep(0.3)
+            ist.append(1)
+            print("user:")
+            print(ist)
+            while mist == ist:
+                points += 1
+                ist = []
+                time.sleep(0.2)
+                add_to_sequence(mist)
+                print("added")
+                time.sleep(0.2)
+                display_sequence(mist)            
+            
+        if yellowb.value:
+            yellow.value = True
+            time.sleep(0.3)
+            yellow.value = False
+            time.sleep(0.3)
+            ist.append(2)
+            print("user:")
+            print(ist)
+            while mist == ist:
+                points += 1
+                ist = []
+                time.sleep(0.2)
+                add_to_sequence(mist)
+                print("added")
+                time.sleep(0.2)
+                display_sequence(mist)            
+            
+        if blueb.value:
+            blue.value = True
+            time.sleep(0.3)
+            blue.value = False
+            time.sleep(0.3)
+            ist.append(3)
+            print("user:")
+            print(ist)
+            while mist == ist:
+                points += 1
+                ist = []
+                time.sleep(0.2)
+                add_to_sequence(mist)
+                print("added")
+                time.sleep(0.2)
+                display_sequence(mist)            
+    else:
+        reset()
     
     
 # main
-mist = []
-ist = []
+
 while True:
     if not start:
         if whiteb.value:
@@ -138,12 +185,5 @@ while True:
             print("added")
             time.sleep(0.2)
             display_sequence(mist)
-        user_led(ist)
+        user_led(mist)
         
-        if ist == mist:
-            ist = []
-            time.sleep(0.2)
-            add_to_sequence(mist)
-            print("added")
-            time.sleep(0.2)
-            display_sequence(mist)
