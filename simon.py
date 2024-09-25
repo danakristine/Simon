@@ -43,8 +43,9 @@ blueb.direction = Direction.INPUT
 #extra variables
 start = False
 points = 0
-mist = []
-ist =[]
+user_press = 1
+user_idx = 0
+
 # creating functions
 def add_to_sequence(lyst):
     lyst.append(random.randint(0,3))
@@ -97,93 +98,71 @@ def display_scr():
 def reset():
     start = False
     mist = []
-    ist = []
 
-def user_led(mist):
-    if start:
-        if redb.value:
+
+def user_updated():
+    if redb.value:
             red.value = True
             time.sleep(0.3)
             red.value = False
             time.sleep(0.3)
-            ist.append(0)
+            user_press = 0
             print("user:")
-            print(ist)
-            while mist == ist:
-                points += 1
-                ist = []
-                time.sleep(0.2)
-                add_to_sequence(mist)
-                print("added")
-                time.sleep(0.2)
-                display_sequence(mist)            
+            print(user_press)
+
+    if greenb.value:
+        green.value = True
+        time.sleep(0.3)
+        green.value = False
+        time.sleep(0.3)
+        user_press = 1
+        print("user:")
+        print(user_press)
+
+
+    if yellowb.value:
+        yellow.value = True
+        time.sleep(0.3)
+        yellow.value = False
+        time.sleep(0.3)
+        user_press = 2
+        print("user:")
+        print(user_press)
+
+    if blueb.value:
+        blue.value = True
+        time.sleep(0.3)
+        blue.value = False
+        time.sleep(0.3)
+        user_press = 3
+        print("user:")
+        print(user_press)
             
-        if greenb.value:
-            green.value = True
-            time.sleep(0.3)
-            green.value = False
-            time.sleep(0.3)
-            ist.append(1)
-            print("user:")
-            print(ist)
-            while mist == ist:
-                points += 1
-                ist = []
-                time.sleep(0.2)
-                add_to_sequence(mist)
-                print("added")
-                time.sleep(0.2)
-                display_sequence(mist)            
-            
-        if yellowb.value:
-            yellow.value = True
-            time.sleep(0.3)
-            yellow.value = False
-            time.sleep(0.3)
-            ist.append(2)
-            print("user:")
-            print(ist)
-            while mist == ist:
-                points += 1
-                ist = []
-                time.sleep(0.2)
-                add_to_sequence(mist)
-                print("added")
-                time.sleep(0.2)
-                display_sequence(mist)            
-            
-        if blueb.value:
-            blue.value = True
-            time.sleep(0.3)
-            blue.value = False
-            time.sleep(0.3)
-            ist.append(3)
-            print("user:")
-            print(ist)
-            while mist == ist:
-                points += 1
-                ist = []
-                time.sleep(0.2)
-                add_to_sequence(mist)
-                print("added")
-                time.sleep(0.2)
-                display_sequence(mist)            
-    else:
-        reset()
+def comparing_led():
+        user_updated()
+        for i in range(mist):
+            if mist[user_idx] == user_press:
+                user_idx += 1
+                user_updated()
+            else:
+                display_scr()
+                reset()
+                
+
     
     
 # main
+mist = []
 
 while True:
-    if not start:
-        if whiteb.value:
-            start = True
-    if start:
-        if whiteb.value:
-            time.sleep(0.2)
+    if not start and whiteb.value:
+        start = True
+        time.sleep(0.5)
+        if start:
             add_to_sequence(mist)
-            print("added")
-            time.sleep(0.2)
             display_sequence(mist)
-        user_led(mist)
-        
+            if comparing_led():
+                score += 1
+                time.sleep(1.0)
+    
+    
