@@ -42,7 +42,7 @@ start = False
 points = 0
 user_press = 1
 user_idx = 0
-game = False
+
 
 # creating functions
 def add_to_sequence(lyst):
@@ -110,8 +110,7 @@ def user_updated():
         red.value = False
         time.sleep(0.3)
         user_press = 0
-        print("user:")
-        print(user_press)
+        return user_press
 
     if greenb.value:
         green.value = True
@@ -119,8 +118,7 @@ def user_updated():
         green.value = False
         time.sleep(0.3)
         user_press = 1
-        print("user:")
-        print(user_press)
+        return user_press
 
     if yellowb.value:
         yellow.value = True
@@ -128,8 +126,7 @@ def user_updated():
         yellow.value = False
         time.sleep(0.3)
         user_press = 2
-        print("user:")
-        print(user_press)
+        return user_press
 
     if blueb.value:
         blue.value = True
@@ -137,29 +134,23 @@ def user_updated():
         blue.value = False
         time.sleep(0.3)
         user_press = 3
-        print("user:")
-        print(user_press)
+        return user_press
 
 
 def comparing_led():
-    global game
     global user_idx, user_press
     while not (blueb.value or redb.value or yellowb.value or greenb.value):
         pass
     if blueb.value or redb.value or yellowb.value or greenb.value:
-        user_updated()
+        user_press = user_updated()
         for i in range(len(mist)):
             if mist[user_idx] == user_press:
                 user_idx += 1
-                user_updated()
-                add_to_sequence(mist)
-                display_sequence(mist)
             else:
                 display_scr()
-                #reset()
-                #game = False
-    game = True
-
+        add_to_sequence(mist)
+        display_sequence(mist)
+            
 
 # main
 mist = []
@@ -171,12 +162,7 @@ while True:
         if start:
             add_to_sequence(mist)
             display_sequence(mist)
-            game = comparing_led()
-            if game:
-                score += 1
-                time.sleep(1.0)
-
-
+            comparing_led()
 
 
 
