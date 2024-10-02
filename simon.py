@@ -99,7 +99,7 @@ def game_over():
     """
     lights up each led and sets the game sequence to empty
 
-    takes no args
+    takes no parameters
     
     """
     global game
@@ -127,11 +127,19 @@ def display_scr(users):
     parameter:
     users (int): the number of points
 
+    output:
+    prints the number of points
+
     """
     print(users)
 
 
 def reset():
+    """
+    resets the game to the starting point, clearing the game sequence made
+
+    takers no parameters
+    """
     global start
     global game
     start = False
@@ -139,6 +147,14 @@ def reset():
 
 
 def user_updated():
+    """
+    returns the number associated with the color of a light depending on which button is pressed 
+
+    takes no parameters
+
+    output:
+    returns a number between 0-3
+    """
     global user_press
     user_press = -1
     while not (blueb.value or redb.value or yellowb.value or greenb.value):
@@ -173,6 +189,15 @@ def user_updated():
 
 
 def comparing_led():
+    """
+    (supposed to) compares the return value of the button the user presses to the current
+    index value in the randomized game sequence
+
+    takes no parameters
+
+    output:
+    increases the index value or ends game
+    """
     global game
     global user_idx, user_press
     while not (blueb.value or redb.value or yellowb.value or greenb.value):
@@ -188,15 +213,20 @@ def comparing_led():
         
     
 def user_seq():
+    """
+    returns if the value of user index is equal to the amount of items in the game list
+
+    takes no parameters
+
+    output:
+    returns either True of False
+    """
     global user_idx
     global game
     return (user_idx == len(game))
 
 
-
-
 # main
-
 while True:
     if not start and whiteb.value:
         start = True
